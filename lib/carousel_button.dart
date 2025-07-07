@@ -23,16 +23,18 @@ class CarouselButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[];
-    if (icon != null) {
-      children.add(icon!);
-      children.add(const SizedBox(width: 8));
-    }
+
     children.add(
       Text(
         text,
         style: textStyle ?? const TextStyle(color: Colors.white, fontSize: 14),
       ),
     );
+
+    if (icon != null) {
+      children.add(const SizedBox(width: 8));
+      children.add(icon!);
+    }
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -43,7 +45,10 @@ class CarouselButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Row(mainAxisSize: MainAxisSize.min, children: children),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: children,
+      ),
     );
   }
 }

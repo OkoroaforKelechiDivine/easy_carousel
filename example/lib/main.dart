@@ -31,6 +31,7 @@ class ExampleApp extends StatelessWidget {
             activeIndicatorDotHeight: 5,
             continueButtonText: 'Next',
             completeButtonText: 'Get Started',
+            spaceBetweenImageAndText: 92,
             navigationButtonIcon: const Icon(
               Icons.arrow_forward,
               color: Colors.white,

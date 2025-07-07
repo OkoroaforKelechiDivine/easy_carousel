@@ -21,27 +21,33 @@ class EasyCarousel extends StatefulWidget {
   final List<String> captionTexts;
 
   final bool isNavigationButtonVisible;
+  final bool isIndicatorVisible;
+
   final String continueButtonText;
   final String completeButtonText;
+
   final Widget? navigationButtonIcon;
+
   final CarouselPosition navigationButtonPosition;
+  final CarouselPosition indicatorPosition;
 
   final Color activeIndicatorDotColor;
-  final double activeIndicatorDotWidth;
-  final double activeIndicatorDotHeight;
   final Color inactiveIndicatorDotColor;
+
   final double inactiveIndicatorDotWidth;
   final double inactiveIndicatorDotHeight;
   final double indicatorDotSpacing;
+  final double spaceBetweenImageAndText;
+  final double activeIndicatorDotWidth;
+  final double activeIndicatorDotHeight;
 
-  final bool isIndicatorVisible;
-  final CarouselPosition indicatorPosition;
 
   final VoidCallback? onCarouselComplete;
 
   final TextStyle? headlineTextStyle;
   final TextStyle? captionTextStyle;
   final TextStyle? navigationButtonTextStyle;
+
 
   const EasyCarousel({
     super.key,
@@ -66,6 +72,7 @@ class EasyCarousel extends StatefulWidget {
     this.indicatorDotSpacing = 8,
     this.captionTextStyle,
     this.navigationButtonTextStyle,
+    this.spaceBetweenImageAndText = 16.0,
   }) : assert(
          imageUrls.length == headlineTexts.length &&
              headlineTexts.length == captionTexts.length,
@@ -173,6 +180,7 @@ class _EasyCarouselState extends State<EasyCarousel> {
                           fit: BoxFit.contain,
                         ),
                       ),
+                      SizedBox(height: widget.spaceBetweenImageAndText),
 
                       // Indicator directly under the image, ONLY if bottomCenter
                       if (widget.isIndicatorVisible &&
