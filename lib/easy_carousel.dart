@@ -255,7 +255,6 @@ class _EasyCarouselState extends State<EasyCarousel> {
             ),
           ),
 
-        // Floating navigation button
         if (widget.isNavigationButtonVisible)
           Align(
             alignment: _alignmentFromPosition(widget.navigationButtonPosition),
