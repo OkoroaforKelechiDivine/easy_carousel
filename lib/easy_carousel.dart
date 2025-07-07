@@ -47,6 +47,8 @@ class EasyCarousel extends StatefulWidget {
   final TextStyle? captionTextStyle;
   final TextStyle? navigationButtonTextStyle;
 
+  final PageController? pageController;
+
   const EasyCarousel({
     super.key,
     required this.imageUrls,
@@ -71,6 +73,7 @@ class EasyCarousel extends StatefulWidget {
     this.captionTextStyle,
     this.navigationButtonTextStyle,
     this.spaceBetweenImageAndText = 16.0,
+    this.pageController,
   }) : assert(
           imageUrls.length == headlineTexts.length &&
               headlineTexts.length == captionTexts.length,
@@ -82,24 +85,28 @@ class EasyCarousel extends StatefulWidget {
 }
 
 class _EasyCarouselState extends State<EasyCarousel> {
-  late final PageController _pageController;
-  late Timer _autoSlideTimer;
+  late final PageController _internalController;
+  Timer? _autoSlideTimer;
   int _currentPageIndex = 0;
+  bool get _usesInternalController => widget.pageController == null;
+
+  PageController get _controller =>
+      widget.pageController ?? _internalController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _internalController = PageController();
     _startAutoSlide();
   }
 
   void _startAutoSlide() {
     _autoSlideTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-      if (_pageController.hasClients) {
+      if (_controller.hasClients) {
         if (_currentPageIndex == widget.imageUrls.length - 1) {
-          _pageController.jumpToPage(0);
+          _controller.jumpToPage(0);
         } else {
-          _pageController.nextPage(
+          _controller.nextPage(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeIn,
           );
@@ -118,7 +125,7 @@ class _EasyCarouselState extends State<EasyCarousel> {
     if (_currentPageIndex == widget.imageUrls.length - 1) {
       widget.onCarouselComplete?.call();
     } else {
-      _pageController.nextPage(
+      _controller.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
@@ -127,8 +134,10 @@ class _EasyCarouselState extends State<EasyCarousel> {
 
   @override
   void dispose() {
-    _autoSlideTimer.cancel();
-    _pageController.dispose();
+    _autoSlideTimer?.cancel();
+    if (_usesInternalController) {
+      _internalController.dispose();
+    }
     super.dispose();
   }
 
@@ -161,7 +170,7 @@ class _EasyCarouselState extends State<EasyCarousel> {
       children: [
         Center(
           child: PageView.builder(
-            controller: _pageController,
+            controller: _controller,
             onPageChanged: _onPageChanged,
             itemCount: widget.imageUrls.length,
             itemBuilder: (context, index) => Padding(
@@ -180,7 +189,6 @@ class _EasyCarouselState extends State<EasyCarousel> {
                     ),
                   ),
                   SizedBox(height: widget.spaceBetweenImageAndText),
-
                   if (widget.isIndicatorVisible &&
                       widget.indicatorPosition == CarouselPosition.bottomCenter)
                     Padding(
@@ -197,7 +205,6 @@ class _EasyCarouselState extends State<EasyCarousel> {
                         spacing: widget.indicatorDotSpacing,
                       ),
                     ),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: CarouselText(
@@ -210,9 +217,7 @@ class _EasyCarouselState extends State<EasyCarousel> {
                       overflow: TextOverflow.visible,
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: CarouselText(
@@ -229,7 +234,6 @@ class _EasyCarouselState extends State<EasyCarousel> {
             ),
           ),
         ),
-
         if (widget.isIndicatorVisible &&
             widget.indicatorPosition != CarouselPosition.bottomCenter)
           Align(
@@ -249,7 +253,6 @@ class _EasyCarouselState extends State<EasyCarousel> {
               ),
             ),
           ),
-
         if (widget.isNavigationButtonVisible)
           Align(
             alignment: _alignmentFromPosition(widget.navigationButtonPosition),

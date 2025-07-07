@@ -1,7 +1,7 @@
 # 📸 EasyCarousel
 
 [![pub.dev](https://img.shields.io/pub/v/easy_carousel?color=blue)](https://pub.dev/packages/easy_carousel)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/easy_carousel?style=social)](https://github.com/your-username/easy_carousel)
+[![GitHub stars](https://img.shields.io/github/stars/your-username/easy_carousel?style=social)](https://github.com/OkoroaforKelechiDivine/easy_carousel)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **EasyCarousel** is a highly customizable, developer-friendly Flutter widget that makes it easy to build carousels, onboarding flows, and image sliders with styled headlines, captions, indicators, and navigation buttons.
@@ -25,7 +25,7 @@ Add it to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  easy_carousel: ^1.0.0
+  easy_carousel: ^0.2.0
 
 ## Run
 
@@ -69,6 +69,7 @@ class ExampleApp extends StatelessWidget {
             isIndicatorVisible: true,
             indicatorPosition: CarouselPosition.bottomCenter,
             spaceBetweenImageAndText: 32,
+            pageController: pageController,
 
             // Customize indicators
             activeIndicatorDotColor: Colors.blue,

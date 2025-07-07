@@ -39,7 +39,7 @@ class ExampleApp extends StatelessWidget {
           isIndicatorVisible: true,
           indicatorPosition: CarouselPosition.bottomLeft,
           onCarouselComplete: () {
-            print('You finished the carousel!');
+            debugPrint('You finished the carousel!');
           },
         ),
       ),
