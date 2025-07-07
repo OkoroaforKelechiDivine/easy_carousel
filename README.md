@@ -68,6 +68,7 @@ class ExampleApp extends StatelessWidget {
             navigationButtonPosition: CarouselPosition.bottomRight,
             isIndicatorVisible: true,
             indicatorPosition: CarouselPosition.bottomCenter,
+            spaceBetweenImageAndText: 32,
 
             // Customize indicators
             activeIndicatorDotColor: Colors.blue,
