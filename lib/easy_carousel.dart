@@ -41,13 +41,11 @@ class EasyCarousel extends StatefulWidget {
   final double activeIndicatorDotWidth;
   final double activeIndicatorDotHeight;
 
-
   final VoidCallback? onCarouselComplete;
 
   final TextStyle? headlineTextStyle;
   final TextStyle? captionTextStyle;
   final TextStyle? navigationButtonTextStyle;
-
 
   const EasyCarousel({
     super.key,
@@ -74,10 +72,10 @@ class EasyCarousel extends StatefulWidget {
     this.navigationButtonTextStyle,
     this.spaceBetweenImageAndText = 16.0,
   }) : assert(
-         imageUrls.length == headlineTexts.length &&
-             headlineTexts.length == captionTexts.length,
-         "imageUrls, headlineTexts, and captionTexts must all have the same length",
-       );
+          imageUrls.length == headlineTexts.length &&
+              headlineTexts.length == captionTexts.length,
+          "imageUrls, headlineTexts, and captionTexts must all have the same length",
+        );
 
   @override
   State<EasyCarousel> createState() => _EasyCarouselState();
@@ -158,83 +156,80 @@ class _EasyCarouselState extends State<EasyCarousel> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+
     return Stack(
       children: [
-        Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                itemCount: widget.imageUrls.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 30),
-                      SizedBox(
-                        height: 250,
-                        width: screenWidth,
-                        child: Image.network(
-                          widget.imageUrls[index],
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      SizedBox(height: widget.spaceBetweenImageAndText),
-
-                      // Indicator directly under the image, ONLY if bottomCenter
-                      if (widget.isIndicatorVisible &&
-                          widget.indicatorPosition ==
-                              CarouselPosition.bottomCenter)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12, bottom: 12),
-                          child: CarouselIndicator(
-                            itemCount: widget.imageUrls.length,
-                            currentIndex: _currentPageIndex,
-                            activeColor: widget.activeIndicatorDotColor,
-                            activeWidth: widget.activeIndicatorDotWidth,
-                            activeHeight: widget.activeIndicatorDotHeight,
-                            inactiveColor: widget.inactiveIndicatorDotColor,
-                            inactiveWidth: widget.inactiveIndicatorDotWidth,
-                            inactiveHeight: widget.inactiveIndicatorDotHeight,
-                            spacing: widget.indicatorDotSpacing,
-                          ),
-                        ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: CarouselText(
-                          text: widget.headlineTexts[index],
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: widget.headlineTextStyle?.color,
-                          fontFamily: widget.headlineTextStyle?.fontFamily,
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: CarouselText(
-                          text: widget.captionTexts[index],
-                          textAlign: TextAlign.center,
-                          fontSize: 14,
-                          color: widget.captionTextStyle?.color ?? Colors.grey,
-                          fontFamily: widget.captionTextStyle?.fontFamily,
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                      const SizedBox(height: 80),
-                    ],
+        Center(
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: _onPageChanged,
+            itemCount: widget.imageUrls.length,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 250,
+                    width: screenWidth * 0.8,
+                    child: Image.network(
+                      widget.imageUrls[index],
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
+                  SizedBox(height: widget.spaceBetweenImageAndText),
+
+                  if (widget.isIndicatorVisible &&
+                      widget.indicatorPosition == CarouselPosition.bottomCenter)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: CarouselIndicator(
+                        itemCount: widget.imageUrls.length,
+                        currentIndex: _currentPageIndex,
+                        activeColor: widget.activeIndicatorDotColor,
+                        activeWidth: widget.activeIndicatorDotWidth,
+                        activeHeight: widget.activeIndicatorDotHeight,
+                        inactiveColor: widget.inactiveIndicatorDotColor,
+                        inactiveWidth: widget.inactiveIndicatorDotWidth,
+                        inactiveHeight: widget.inactiveIndicatorDotHeight,
+                        spacing: widget.indicatorDotSpacing,
+                      ),
+                    ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: CarouselText(
+                      text: widget.headlineTexts[index],
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: widget.headlineTextStyle?.color,
+                      fontFamily: widget.headlineTextStyle?.fontFamily,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: CarouselText(
+                      text: widget.captionTexts[index],
+                      textAlign: TextAlign.center,
+                      fontSize: 14,
+                      color: widget.captionTextStyle?.color ?? Colors.grey,
+                      fontFamily: widget.captionTextStyle?.fontFamily,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
 
-        // Floating indicator for all other positions
         if (widget.isIndicatorVisible &&
             widget.indicatorPosition != CarouselPosition.bottomCenter)
           Align(
