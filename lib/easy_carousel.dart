@@ -15,6 +15,11 @@ enum CarouselPosition {
   centerRight,
 }
 
+enum ImageSourceType {
+  asset,
+  network,
+}
+
 class EasyCarousel extends StatefulWidget {
   final List<String> imageUrls;
   final List<String> headlineTexts;
@@ -40,6 +45,17 @@ class EasyCarousel extends StatefulWidget {
   final double spaceBetweenImageAndText;
   final double activeIndicatorDotWidth;
   final double activeIndicatorDotHeight;
+
+  // New parameters
+  final Color buttonColor;
+  final Color buttonTextColor; // Added to support textColor in CarouselButton
+  final double imageWidth;
+  final double imageHeight;
+  final double headlineFontSize;
+  final double captionFontSize;
+  final Color headlineFontColor;
+  final Color captionFontColor;
+  final ImageSourceType imageSourceType;
 
   final VoidCallback? onCarouselComplete;
 
@@ -74,6 +90,15 @@ class EasyCarousel extends StatefulWidget {
     this.navigationButtonTextStyle,
     this.spaceBetweenImageAndText = 16.0,
     this.pageController,
+    this.buttonColor = Colors.black, // Default button background color
+    this.buttonTextColor = Colors.white, // Default button text color
+    this.imageWidth = 0.8, // Default image width (as fraction of screen width)
+    this.imageHeight = 250.0, // Default image height
+    this.headlineFontSize = 20.0, // Default headline font size
+    this.captionFontSize = 14.0, // Default caption font size
+    this.headlineFontColor = Colors.black, // Default headline font color
+    this.captionFontColor = Colors.grey, // Default caption font color
+    this.imageSourceType = ImageSourceType.network, // Default image source
   }) : assert(
           imageUrls.length == headlineTexts.length &&
               headlineTexts.length == captionTexts.length,
@@ -162,6 +187,25 @@ class _EasyCarouselState extends State<EasyCarousel> {
     }
   }
 
+  Widget _buildImage(String imagePath) {
+    switch (widget.imageSourceType) {
+      case ImageSourceType.asset:
+        return Image.asset(
+          imagePath,
+          fit: BoxFit.contain,
+          width: MediaQuery.of(context).size.width * widget.imageWidth,
+          height: widget.imageHeight,
+        );
+      case ImageSourceType.network:
+        return Image.network(
+          imagePath,
+          fit: BoxFit.contain,
+          width: MediaQuery.of(context).size.width * widget.imageWidth,
+          height: widget.imageHeight,
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -181,12 +225,9 @@ class _EasyCarouselState extends State<EasyCarousel> {
                 children: [
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: 250,
-                    width: screenWidth * 0.8,
-                    child: Image.network(
-                      widget.imageUrls[index],
-                      fit: BoxFit.contain,
-                    ),
+                    height: widget.imageHeight,
+                    width: screenWidth * widget.imageWidth,
+                    child: _buildImage(widget.imageUrls[index]),
                   ),
                   SizedBox(height: widget.spaceBetweenImageAndText),
                   if (widget.isIndicatorVisible &&
@@ -211,8 +252,8 @@ class _EasyCarouselState extends State<EasyCarousel> {
                       text: widget.headlineTexts[index],
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: widget.headlineTextStyle?.color,
+                      fontSize: widget.headlineFontSize,
+                      color: widget.headlineFontColor,
                       fontFamily: widget.headlineTextStyle?.fontFamily,
                       overflow: TextOverflow.visible,
                     ),
@@ -223,8 +264,8 @@ class _EasyCarouselState extends State<EasyCarousel> {
                     child: CarouselText(
                       text: widget.captionTexts[index],
                       textAlign: TextAlign.center,
-                      fontSize: 14,
-                      color: widget.captionTextStyle?.color ?? Colors.grey,
+                      fontSize: widget.captionFontSize,
+                      color: widget.captionFontColor,
                       fontFamily: widget.captionTextStyle?.fontFamily,
                       overflow: TextOverflow.visible,
                     ),
@@ -265,6 +306,8 @@ class _EasyCarouselState extends State<EasyCarousel> {
                 icon: widget.navigationButtonIcon,
                 onPressed: _onNavigationButtonPressed,
                 textStyle: widget.navigationButtonTextStyle,
+                backgroundColor: widget.buttonColor, // Fixed: Use backgroundColor
+                textColor: widget.buttonTextColor, // Pass textColor
               ),
             ),
           ),

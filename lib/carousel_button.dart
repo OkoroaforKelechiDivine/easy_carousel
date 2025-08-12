@@ -6,6 +6,7 @@ class CarouselButton extends StatelessWidget {
   final VoidCallback onPressed;
   final TextStyle? textStyle;
   final Color backgroundColor;
+  final Color textColor;
   final EdgeInsetsGeometry padding;
   final double borderRadius;
 
@@ -16,6 +17,7 @@ class CarouselButton extends StatelessWidget {
     required this.onPressed,
     this.textStyle,
     this.backgroundColor = Colors.black,
+    this.textColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
     this.borderRadius = 8,
   });
@@ -23,11 +25,10 @@ class CarouselButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[];
-
     children.add(
       Text(
         text,
-        style: textStyle ?? const TextStyle(color: Colors.white, fontSize: 14),
+        style: textStyle ?? TextStyle(color: textColor, fontSize: 14),
       ),
     );
 
