@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:easy_carousel/easy_carousel.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(const ExampleApp());
 
@@ -21,7 +21,7 @@ class ExampleApp extends StatelessWidget {
             'assets/images/image2.jpg',
             'https://picsum.photos/id/1013/600/400',
           ],
-          headlineTexts: ['Welcome', 'Explore', 'Enjoy'],
+          // headlineTexts: ['Welcome', 'Explore', 'Enjoy'],
           captionTexts: [
             'Discover the power of EasyCarousel!',
             'Swipe to explore amazing features',
@@ -36,7 +36,6 @@ class ExampleApp extends StatelessWidget {
           ),
           navigationButtonPosition: CarouselPosition.bottomRight,
           isIndicatorVisible: true,
-          indicatorPosition: CarouselPosition.bottomLeft,
           onCarouselComplete: () {
             debugPrint('You finished the carousel!');
           },
@@ -48,15 +47,20 @@ class ExampleApp extends StatelessWidget {
           captionFontSize: 16.0,
           headlineFontColor: Colors.black87,
           captionFontColor: Colors.grey[600]!,
-          imageSourceType: ImageSourceType.asset,
+          imageSourceType: ImageSourceType.network,
           activeIndicatorDotColor: Colors.blueAccent,
           inactiveIndicatorDotColor: Colors.grey[300]!,
           activeIndicatorDotWidth: 24.0,
+          indicatorPosition: CarouselPosition.underCaption,
           activeIndicatorDotHeight: 6.0,
           inactiveIndicatorDotWidth: 12.0,
           inactiveIndicatorDotHeight: 6.0,
           indicatorDotSpacing: 10.0,
           spaceBetweenImageAndText: 40.0,
+          activeIndicatorBorderColor: Colors.blueAccent.withOpacity(0.6),
+          activeIndicatorBorderWidth: 2.0,
+          inactiveIndicatorBorderColor: Colors.grey,
+          inactiveIndicatorBorderWidth: 1.0,
           headlineTextStyle: const TextStyle(
             fontFamily: 'Roboto',
             fontWeight: FontWeight.bold,

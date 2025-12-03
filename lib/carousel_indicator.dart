@@ -15,6 +15,11 @@ class CarouselIndicator extends StatelessWidget {
 
   final double spacing;
 
+  final Color activeBorderColor;
+  final double activeBorderWidth;
+  final Color inactiveBorderColor;
+  final double inactiveBorderWidth;
+
   const CarouselIndicator({
     super.key,
     required this.itemCount,
@@ -26,6 +31,10 @@ class CarouselIndicator extends StatelessWidget {
     this.inactiveWidth = 10.0,
     this.inactiveHeight = 5.0,
     this.spacing = 8.0,
+    this.activeBorderColor = Colors.transparent,
+    this.activeBorderWidth = 0.0,
+    this.inactiveBorderColor = Colors.transparent,
+    this.inactiveBorderWidth = 0.0,
   });
 
   @override
@@ -43,6 +52,10 @@ class CarouselIndicator extends StatelessWidget {
             color: isActive ? activeColor : inactiveColor,
             borderRadius: BorderRadius.circular(
               (isActive ? activeHeight : inactiveHeight) / 2,
+            ),
+            border: Border.all(
+              color: isActive ? activeBorderColor : inactiveBorderColor,
+              width: isActive ? activeBorderWidth : inactiveBorderWidth,
             ),
           ),
         );
