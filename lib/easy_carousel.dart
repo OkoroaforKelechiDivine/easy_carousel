@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'carousel_button.dart';
 import 'carousel_indicator.dart';
 import 'carousel_text.dart';
