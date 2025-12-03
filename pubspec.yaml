@@ -4,7 +4,7 @@ description: "EasyCarousel is a customizable and developer-friendly Flutter widg
 
 repository: https://github.com/OkoroaforKelechiDivine/easy_carousel
 issue_tracker: https://github.com/OkoroaforKelechiDivine/easy_carousel/issues
-version: 3.0.0
+version: 4.0.0
 homepage:
 
 environment:
@@ -14,6 +14,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  google_fonts:
   
 
 dev_dependencies:

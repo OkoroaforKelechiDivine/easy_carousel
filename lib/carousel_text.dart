@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CarouselText extends StatelessWidget {
   final String text;
@@ -24,17 +25,28 @@ class CarouselText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? style;
+    if (fontFamily != null) {
+      style = GoogleFonts.getFont(
+        fontFamily!,
+        color: color ?? Colors.black,
+        fontSize: fontSize ?? 14,
+        fontWeight: fontWeight ?? FontWeight.normal,
+      );
+    } else {
+      style = TextStyle(
+        color: color ?? Colors.black,
+        fontSize: fontSize ?? 14,
+        fontWeight: fontWeight ?? FontWeight.normal,
+      );
+    }
+
     return Text(
       text,
       textAlign: textAlign ?? TextAlign.start,
       maxLines: maxLines,
       overflow: overflow ?? TextOverflow.ellipsis,
-      style: TextStyle(
-        color: color ?? Colors.black,
-        fontSize: fontSize ?? 14,
-        fontWeight: fontWeight ?? FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
+      style: style,
     );
   }
 }

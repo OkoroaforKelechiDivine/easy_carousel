@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'carousel_button.dart';
 import 'carousel_indicator.dart';
 import 'carousel_text.dart';
@@ -62,6 +63,8 @@ class EasyCarousel extends StatefulWidget {
   final double captionFontSize;
   final Color headlineFontColor;
   final Color captionFontColor;
+  final String? headlineFontFamily;
+  final String? captionFontFamily;
   final ImageSourceType imageSourceType;
 
   final VoidCallback? onCarouselComplete;
@@ -105,6 +108,8 @@ class EasyCarousel extends StatefulWidget {
     this.captionFontSize = 14.0,
     this.headlineFontColor = Colors.black,
     this.captionFontColor = Colors.grey,
+    this.headlineFontFamily,
+    this.captionFontFamily,
     this.imageSourceType = ImageSourceType.network,
     this.activeIndicatorBorderColor = Colors.transparent,
     this.activeIndicatorBorderWidth = 0.0,
@@ -282,7 +287,7 @@ class _EasyCarouselState extends State<EasyCarousel> {
                           fontWeight: FontWeight.bold,
                           fontSize: widget.headlineFontSize,
                           color: widget.headlineFontColor,
-                          fontFamily: widget.headlineTextStyle?.fontFamily,
+                          fontFamily: widget.headlineFontFamily ?? widget.headlineTextStyle?.fontFamily,
                           overflow: TextOverflow.visible,
                         ),
                       ),
@@ -335,7 +340,7 @@ class _EasyCarouselState extends State<EasyCarousel> {
                           textAlign: TextAlign.center,
                           fontSize: widget.captionFontSize,
                           color: widget.captionFontColor,
-                          fontFamily: widget.captionTextStyle?.fontFamily,
+                          fontFamily: widget.captionFontFamily ?? widget.captionTextStyle?.fontFamily,
                           overflow: TextOverflow.visible,
                         ),
                       ),
